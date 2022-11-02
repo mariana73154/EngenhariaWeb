@@ -1,0 +1,75 @@
+﻿@model IEnumerable<FP18_19_v1.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+    long Antiguidade = 0;
+    string st="nada";
+}
+
+<h1>Listagem de Clientes</h1>
+
+<p>
+    <a asp-action="Create">+ Adicionar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NivelCliente)
+            </th>
+            <th>
+                @Html.Name("Antiguidade")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+            
+            if(item.DataRegisto.Year==DateTime.Now.Year)
+            {
+                if (item.DataRegisto.Month==DateTime.Now.Month)
+                {
+                    Antiguidade = Convert.ToInt64(DateTime.Now.Day) - Convert.ToInt64(item.DataRegisto.Day);
+                    if (Antiguidade == 1) { st = "dia"; }
+                    else { st = "dias"; }
+                }
+                else
+                {
+                    Antiguidade = Convert.ToInt64(DateTime.Now.Month) - Convert.ToInt64(item.DataRegisto.Month);
+                    if (Antiguidade == 1) { st = "mês"; }
+                    else { st = "meses"; }
+                }
+            }
+            else
+            {
+                Antiguidade = Convert.ToInt64(DateTime.Now.Year) - Convert.ToInt64(item.DataRegisto.Year);
+                if (Antiguidade == 1) { st = "ano"; }
+                else { st = "anos"; }
+            }
+
+            <tr>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">X</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NivelCliente)
+            </td>
+            <td>@Antiguidade @st </td>
+        </tr>
+}
+    </tbody>
+</table>

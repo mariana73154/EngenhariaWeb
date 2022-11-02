@@ -1,0 +1,43 @@
+﻿@model IEnumerable<FP18_19_v2.Models.Imagem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Galeria</h1>
+
+<a asp-action="Upload">+ Adicionar</a>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+                
+            </th>
+            <th>
+                Imagem
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                        <p></p>
+                        @Html.ActionLink(@item.Gostos+" Gostos","Gosto",item)
+                    </td>
+                    <td>
+                        <img src="~/Image/@item.CaminhoFicheiro" width="200" height="200" />
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
